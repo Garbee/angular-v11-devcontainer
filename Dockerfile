@@ -13,12 +13,9 @@ RUN apt-get update && \
   chmod 0440 /etc/sudoers.d/$USERNAME && \
   apt-get upgrade -y
 
-USER node
-
 # Install browser dependencies
-RUN npx playwright install-deps
+RUN su node -c "npx playwright install-deps"
 
-USER root
 # Install other deps
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # hadolint ignore=DL3008,DL3015
@@ -32,8 +29,6 @@ RUN apt-get install -y curl && \
   jq \
   shellcheck \
   direnv && \
-  npm install -g @angular/cli@latest && \
+  npm install -g @angular/cli@11 && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
-
-USER node
