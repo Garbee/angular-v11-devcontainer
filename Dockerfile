@@ -31,4 +31,7 @@ RUN apt-get install -y curl && \
   direnv && \
   npm install -g @angular/cli@11 && \
   apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* && \
+  su node -c "ng config -g cli.warnings.versionMismatch false" && \
+  su node -c "ng analytics off"
+
