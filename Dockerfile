@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # hadolint ignore=DL3008,DL3015
 RUN apt-get update && \
-  apt-get install -y sudo && \
+  apt-get install -y sudo ca-certificates && \
   rm -rf /var/lib/apt/lists/* && \
   echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME &&\
   chmod 0440 /etc/sudoers.d/$USERNAME && \
