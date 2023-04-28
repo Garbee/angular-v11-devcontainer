@@ -12,5 +12,5 @@
   // Git complains if the ownership of the config directory is mismatched
   // from the one executing operations. This will happen since we normally
   // clone as a user from the host but run as a different user in the container.
-  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder"
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
 }
