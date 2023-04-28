@@ -14,7 +14,8 @@ RUN apt-get update && \
   apt-get upgrade -y
 
 # Install browser dependencies
-RUN su node -c "npx playwright install-deps"
+RUN su node -c "npx playwright install-deps" && \
+  su node -c "npx playwright install"
 
 # Install other deps
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
