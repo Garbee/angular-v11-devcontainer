@@ -2,8 +2,12 @@ FROM mcr.microsoft.com/devcontainers/typescript-node:0-14
 
 ARG USERNAME=node
 
+# Corporate proxy is... going to corporate proxy.
 ENV NODE_TLS_REJECT_UNAUTHORIZED=0
+# Help massage some prompts to not happen or accept defaults.
 ENV DEBIAN_FRONTEND=noninteractive
+# Browsers are pre-installed, they don't need to be installed.
+ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 
 # hadolint ignore=DL3008,DL3015
 RUN apt-get update && \
