@@ -18,8 +18,10 @@ RUN apt-get update && \
   apt-get upgrade -y
 
 # Install browser dependencies
-RUN su node -c "npx playwright install-deps" && \
-  su node -c "npx playwright install"
+USER node
+RUN npx playwright install --with-deps
+
+USER root
 
 # Install other deps
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -40,3 +42,4 @@ RUN apt-get install -y curl && \
   su node -c "ng config -g cli.warnings.versionMismatch false" && \
   su node -c "ng analytics off"
 
+USER node
