@@ -17,17 +17,15 @@ RUN apt-get update && \
   chmod 0440 /etc/sudoers.d/$USERNAME && \
   apt-get upgrade -y
 
-# Install browser dependencies
+# Install other deps
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+# hadolint ignore=DL3008,DL3015
 RUN deps=$(su node -c "npx playwright install-deps --dry-run") && \
   rawCommand=${deps#'sudo -- sh -c \" apt-get update&& '} && \
   rawCommand=${rawCommand%'\"'} && \
   eval "$rawCommand" && \
-  su node -c "npx playwright install"
-
-# Install other deps
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-# hadolint ignore=DL3008,DL3015
-RUN apt-get install -y curl && \
+  su node -c "npx playwright install" && \
+  apt-get install -y curl && \
   curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
   && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
   && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
